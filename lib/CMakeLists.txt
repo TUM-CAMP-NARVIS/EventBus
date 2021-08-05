@@ -81,6 +81,7 @@ target_include_directories(EventBus PUBLIC
 	PRIVATE
     ${CMAKE_BINARY_DIR}/include
 	)
+
 target_link_libraries(EventBus ${CMAKE_THREAD_LIBS_INIT})
 
 # Add definitions for targets

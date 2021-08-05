@@ -11,7 +11,7 @@
 #include <iterator>
 
 #include "dexode/eventbus/Bus.hpp"
-#include "dexode/eventbus/visibility.h"
+#include "dexode/visibility.h"
 
 namespace dexode
 {
