@@ -129,6 +129,6 @@ void EventBus::unlisten(const std::uint32_t listenerID,
 	}
 }
 
-template class EVENTBUS_EXPORT dexode::eventbus::Listener<dexode::eventbus::Bus>
+template class EVENTBUS_EXPORT dexode::eventbus::Listener<dexode::eventbus::Bus>;
 
 } // namespace dexode
