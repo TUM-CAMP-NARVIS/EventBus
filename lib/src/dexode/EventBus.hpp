@@ -11,11 +11,12 @@
 #include <iterator>
 
 #include "dexode/eventbus/Bus.hpp"
+#include "dexode/eventbus/visibility.h"
 
 namespace dexode
 {
 
-class EventBus : public dexode::eventbus::Bus
+class EVENTBUS_EXPORT EventBus : public dexode::eventbus::Bus
 {
 	template <typename>
 	friend class dexode::eventbus::internal::ListenerAttorney;

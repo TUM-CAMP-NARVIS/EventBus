@@ -19,6 +19,8 @@ find_package(Threads)
 include(GNUInstallDirs)
 include(cmake/InstallHelp.cmake)
 
+configure_file(${PROJECT_SOURCE_DIR}/src/dexode/config.h.in ${CMAKE_BINARY_DIR}/include/dexode/config.h @ONLY)
+
 # Layout. This works for all platforms:
 #   * <prefix>/lib*/cmake/<PROJECT-NAME>
 #   * <prefix>/lib*/
@@ -26,6 +28,7 @@ include(cmake/InstallHelp.cmake)
 set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 
 set(EventBus_PUBLIC_HEADERS
+	src/dexode/visibility.h
 	src/dexode/EventBus.hpp
 	src/dexode/eventbus/Bus.hpp
 	src/dexode/eventbus/internal/event_id.hpp
@@ -45,6 +48,7 @@ set(EventBus_PUBLIC_HEADERS
 # Library definition
 add_library(EventBus
 	${EventBus_PUBLIC_HEADERS}
+	${CMAKE_BINARY_DIR}/include/dexode/config.h
 	src/dexode/EventBus.cpp
 	src/dexode/eventbus/perk/PassPerk.cpp
 	src/dexode/eventbus/perk/Perk.cpp
@@ -66,9 +70,16 @@ set_target_properties(EventBus PROPERTIES
 
 target_compile_features(EventBus PUBLIC cxx_std_17)
 
+if(NOT EVENTBUS_BUILD_STATIC)
+    target_compile_definitions(EventBus PRIVATE "EVENTBUS_EXPORTS")
+endif()
+
 target_include_directories(EventBus PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/>
+	$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
 	$<INSTALL_INTERFACE:include/>
+	PRIVATE
+    ${CMAKE_BINARY_DIR}/include
 	)
 target_link_libraries(EventBus ${CMAKE_THREAD_LIBS_INIT})
 
@@ -98,6 +109,7 @@ install(TARGETS EventBus
 	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 	INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 	)
+install(FILES ${CMAKE_BINARY_DIR}/include/dexode/config.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/dexode)
 
 # Include module with fuction 'write_basic_package_version_file'
 include(CMakePackageConfigHelpers)

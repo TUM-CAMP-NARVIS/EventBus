@@ -1,0 +1,50 @@
+#ifndef EVENTBUS_CONFIG_H_IN_H
+#define EVENTBUS_CONFIG_H_IN_H
+
+#cmakedefine EVENTBUS_BUILD_STATIC
+
+#cmakedefine EVENTBUS_TARGET_APPLE
+#cmakedefine EVENTBUS_TARGET_UNIX
+#cmakedefine EVENTBUS_TARGET_WINDOWS
+
+/* C++ standard */
+#ifdef _MSC_VER
+#ifdef _MSVC_LANG
+#define EVENTBUS_CXX_STANDARD _MSVC_LANG
+#else
+#define EVENTBUS_CXX_STANDARD 201103L
+#endif
+#else
+#define EVENTBUS_CXX_STANDARD __cplusplus
+#endif
+
+// Visibility Macro Helpers
+
+#ifdef EVENTBUS_TARGET_WINDOWS
+#define EVENTBUS_VISIBILITY_EXPORT __declspec(dllexport)
+#else
+#define EVENTBUS_VISIBILITY_EXPORT __attribute__((visibility("default")))
+#endif
+
+#ifdef EVENTBUS_TARGET_WINDOWS
+#define EVENTBUS_VISIBILITY_INLINE_MEMBER_EXPORT
+#else
+#define EVENTBUS_VISIBILITY_INLINE_MEMBER_EXPORT __attribute__((visibility("default")))
+#endif
+
+#ifdef EVENTBUS_TARGET_WINDOWS
+#define EVENTBUS_VISIBILITY_IMPORT __declspec(dllimport)
+#else
+#define EVENTBUS_VISIBILITY_IMPORT __attribute__((visibility("default")))
+#endif
+
+#define EVENTBUS_VISIBILITY_STATIC
+
+#ifdef EVENTBUS_TARGET_WINDOWS
+#define EVENTBUS_VISIBILITY_LOCAL
+#else
+#define EVENTBUS_VISIBILITY_LOCAL __attribute__((visibility("hidden")))
+#endif
+
+
+#endif //EVENTBUS_CONFIG_H_IN_H

@@ -8,12 +8,13 @@
 #include "dexode/eventbus/internal/ListenerAttorney.hpp"
 #include "dexode/eventbus/internal/event_id.hpp"
 #include "dexode/eventbus/internal/listener_traits.hpp"
+#include "dexode/visibility.h"
 
 namespace dexode::eventbus
 {
 
 template <class Bus>
-class Listener
+class EVENTBUS_EXPORT Listener
 {
 public:
 	explicit Listener() = default; // Dummy listener

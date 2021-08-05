@@ -5,13 +5,28 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 project(EventBusDev LANGUAGES CXX)
 
+option(BUILD_SHARED_LIBS "Build shared library" ON)
 option(ENABLE_TEST "Enable test" ON)
 option(ENABLE_PERFORMANCE "Enable performance subproject" OFF)
 option(ENABLE_LIBCXX "Enable build with libc++" OFF)
 
+if (NOT BUILD_SHARED_LIBS)
+  set(EVENTBUS_BUILD_STATIC 1)
+endif()
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(UNIX)
+    if(APPLE)
+        set(EVENTBUS_TARGET_APPLE 1)
+    endif()
+    set(EVENTBUS_TARGET_UNIX 1)
+elseif(WIN32)
+    set(EVENTBUS_TARGET_WINDOWS 1)
+endif()
 
 if(ENABLE_LIBCXX)
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

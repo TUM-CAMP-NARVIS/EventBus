@@ -11,6 +11,7 @@
 #include "dexode/eventbus/internal/ListenerAttorney.hpp"
 #include "dexode/eventbus/internal/event_id.hpp"
 #include "dexode/eventbus/stream/ProtectedEventStream.hpp"
+#include "dexode/visibility.h"
 
 namespace dexode::eventbus
 {
@@ -23,7 +24,7 @@ using CreateStreamCallback = std::unique_ptr<eventbus::stream::EventStream> (*co
 using PostponeCallback = bool (*const)(Bus& bus, std::any event);
 
 template <typename Event>
-bool postpone(Bus& bus, std::any event);
+bool EVENTBUS_EXPORT postpone(Bus& bus, std::any event);
 
 template <typename Event>
 std::unique_ptr<eventbus::stream::EventStream> createDefaultEventStream()
@@ -31,7 +32,7 @@ std::unique_ptr<eventbus::stream::EventStream> createDefaultEventStream()
 	return std::make_unique<DefaultEventStream<Event>>();
 }
 
-class PostponeHelper
+class EVENTBUS_EXPORT PostponeHelper
 {
 public:
 	internal::event_id_t eventID = nullptr;
@@ -62,7 +63,7 @@ public:
 	~PostponeHelper() = default;
 };
 
-class Bus
+class EVENTBUS_EXPORT Bus
 {
 	template <typename>
 	friend class dexode::eventbus::internal::ListenerAttorney;

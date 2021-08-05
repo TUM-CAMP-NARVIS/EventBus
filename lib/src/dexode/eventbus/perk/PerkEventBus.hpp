@@ -8,11 +8,12 @@
 
 #include "Perk.hpp"
 #include "dexode/EventBus.hpp"
+#include "dexode/visibility.h"
 
 namespace dexode::eventbus::perk
 {
 
-class PerkEventBus : public EventBus
+class EVENTBUS_EXPORT PerkEventBus : public EventBus
 {
 public:
 	class RegisterHelper
